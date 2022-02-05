@@ -1,13 +1,16 @@
 using System.Collections.Generic;
-using CLI.Core;
-using Console.Lib;
+using CLIFramework;
+using CLIHelper;
+using CLIReader;
 using DataToTable;
+using Inventory.Console.Lib;
 using Inventory.Data;
 using Unity;
 
 namespace Inventory.ConsoleApp;
 
-public class AppCommands2 : AppCommands
+public class AppCommands2 
+    : AppCommands
 {
     public AppCommands2(
         IUnityContainer container) 
@@ -32,18 +35,18 @@ public class AppCommands2 : AppCommands
                 , nameof(ItemImage.Path)
             });
             
-        RegisterCommand<Console.Lib.ItemImageReadCommand, ItemImage>(
+        RegisterCommand<ItemImageReadCommand, ItemImage>(
             "ImagePath".ToLowerInvariant()
             , Container.Resolve<IInventoryUnitOfWork>()
             , Container.Resolve<IOutput>()
             , Container.Resolve<IDataToText<ItemImage>>());
 
-        RegisterCommand<Console.Lib.ItemImageInsertCommand, ItemImage>(
+        RegisterCommand<ItemImageInsertCommand, ItemImage>(
             "Insert ImagePath".ToLowerInvariant()
             , Container.Resolve<IInventoryUnitOfWork>()
             , Container.Resolve<List<IReader<string>>>());
             
-        RegisterCommand<Console.Lib.ItemImageUpdateCommand, ItemImage>(
+        RegisterCommand<ItemImageUpdateCommand, ItemImage>(
             "Update ImagePath".ToLowerInvariant()
             , Container.Resolve<IInventoryUnitOfWork>()
             , Container.Resolve<List<IReader<string>>>());

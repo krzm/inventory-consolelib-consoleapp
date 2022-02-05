@@ -1,10 +1,11 @@
-using Console.Lib;
+using CLIFramework;
 using Inventory.Console.Lib;
 using Unity;
 
 namespace Inventory.ConsoleApp;
 
-public class AppCommandSystem<TParser> : global::Console.Lib.AppCommandSystem<TParser>
+public class AppCommandSystem<TParser> 
+    : CLIFramework.AppCommandSystem<TParser>
     where TParser : ICommandParser
 {
     public AppCommandSystem(

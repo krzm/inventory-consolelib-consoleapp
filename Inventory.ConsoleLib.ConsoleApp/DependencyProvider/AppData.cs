@@ -1,9 +1,10 @@
-using Console.Lib;
+using CLIFramework;
 using Unity;
 
 namespace Inventory.ConsoleApp;
 
-public class AppData : global::Console.Lib.AppData
+public class AppData 
+    : CLIFramework.AppData
 {
     public AppData(
         IUnityContainer container) 

@@ -1,14 +1,16 @@
 using System.Collections.Generic;
-using CLI.Core;
-using Console.Lib;
 using DataToTable;
 using Inventory.Data;
 using Inventory.Console.Lib;
 using Unity;
+using CLIFramework;
+using CLIHelper;
+using CLIReader;
 
 namespace Inventory.ConsoleApp;
 
-public class AppCommands: global::Console.Lib.AppCommands
+public class AppCommands 
+    : CLIFramework.AppCommands
 {
     public AppCommands(
         IUnityContainer container) 
