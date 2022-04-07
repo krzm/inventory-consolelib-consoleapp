@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using DataToTable;
 using Inventory.Data;
 using Inventory.Console.Lib;
 using Unity;
 using CLIFramework;
 using CLIHelper;
 using CLIReader;
+using CRUDCommandHelper;
+using CLIWizardHelper;
+using Inventory.Wizard.Lib;
+using Unity.Injection;
+using Serilog;
 
 namespace Inventory.ConsoleApp;
 
@@ -22,7 +25,6 @@ public class AppCommands
     {
         base.RegisterCommands();
 		RegisterItemCommands();
-        RegisterItemCategoryCommands();
     }
 
     private void RegisterItemCommands()
@@ -35,45 +37,37 @@ public class AppCommands
                 nameof(Item.ItemCategoryId)
                 , nameof(Item.Name)
             });
-            
+        
+        Container.RegisterSingleton<IReadCommand<Item>, ItemReadCmd>();
+
         RegisterCommand<ItemReadCommand, Item>(
             "Item".ToLowerInvariant()
-            , Container.Resolve<IInventoryUnitOfWork>()
-            , Container.Resolve<IOutput>()
-            , Container.Resolve<IDataToText<Item>>());
+            , Container.Resolve<IReadCommand<Item>>());
 
-            RegisterCommand<ItemInsertCommand, Item>(
+        Container.RegisterSingleton<IInsertWizard<Item>, ItemInsertWizard>(
+            nameof(ItemInsertWizard)
+            , new InjectionConstructor( new object[] {
+                Container.Resolve<IInventoryUnitOfWork>()
+                , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
+                //, GetModelAReadConfig()
+                , Container.Resolve<ILogger>()
+            }));
+
+        RegisterCommand<ItemInsertCommand, Item>(
             "Insert Item".ToLowerInvariant()
-            , Container.Resolve<IInventoryUnitOfWork>()
-            , Container.Resolve<List<IReader<string>>>());
+            , Container.Resolve<IInsertWizard<Item>>(nameof(ItemInsertWizard)));
+
+        Container.RegisterSingleton<IUpdateWizard<Item>, ItemUpdateWizard>(
+            nameof(ItemUpdateWizard)
+            , new InjectionConstructor( new object[] {
+                Container.Resolve<IInventoryUnitOfWork>()
+                , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
+                //, GetModelAReadConfig()
+                , Container.Resolve<ILogger>()
+            }));
 
         RegisterCommand<ItemUpdateCommand, Item>(
             "Update Item".ToLowerInvariant()
-            , Container.Resolve<IInventoryUnitOfWork>()
-            , Container.Resolve<List<IReader<string>>>());
-    }
-
-    private void RegisterItemCategoryCommands()
-    {
-        RegisterCommand<HelpCommand<ItemCategory>, ItemCategory>(
-            "Help ItemCategory".ToLowerInvariant()
-            , Container.Resolve<IOutput>()
-            , new string[]
-            {
-                nameof(ItemCategory.Name)
-                , nameof(ItemCategory.Description)
-                , nameof(ItemCategory.ParentId)
-            });
-
-        RegisterCommand<ItemCategoryReadCommand, ItemCategory>(
-            "ItemCategory".ToLowerInvariant()
-            , Container.Resolve<IInventoryUnitOfWork>()
-            , Container.Resolve<IOutput>()
-            , Container.Resolve<IDataToText<ItemCategory>>());
-
-        RegisterCommand<ItemCategoryInsertCommand, ItemCategory>(
-            "Insert ItemCategory".ToLowerInvariant()
-            , Container.Resolve<IInventoryUnitOfWork>()
-            , Container.Resolve<List<IReader<string>>>());
+            , Container.Resolve<IUpdateWizard<Item>>(nameof(ItemUpdateWizard)));
     }
 }

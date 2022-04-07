@@ -1,5 +1,10 @@
 ﻿using CLIFramework;
-using Inventory.Modern.Lib;
+using CLIHelper.Unity;
+using CLIReader;
+using Config.Wrapper.Unity;
+using Inventory.Data;
+using Inventory.Table.Unity;
+using Serilog.Wrapper.Unity;
 using Unity;
 
 namespace Inventory.ConsoleApp;
@@ -13,20 +18,27 @@ public class UnityDependencySuite
 	{
 	}
 
-	public override void Register()
+    protected override void RegisterAppData()
     {
-        RegisterSet<AppDatabase>();
-        base.Register();
+        RegisterSet<AppLoggerSet>();
+        RegisterSet<AppConfigSet>();
+		RegisterSet<AppData>();
     }
 
-    protected override void RegisterAppData() => 
-		RegisterSet<AppData>();
+    protected override void RegisterDatabase() => 
+        RegisterSet<AppDatabase>();
 
+    protected override void RegisterConsoleInput()
+    {
+        RegisterSet<CliIOSet>();
+        RegisterSet<CLIReaderSet>();
+    }
+    
     protected override void RegisterConsoleOutput() => 
-        RegisterSet<AppOutput>();
+        RegisterSet<InventoryTableSet>();
 
     protected override void RegisterCommands() => 
-        RegisterSet<AppCommands2>();
+        RegisterSet<AppCommands3>();
         
     protected override void RegisterCommandSystem() => 
 		RegisterSet<AppCommandSystem<ParamCommandParser>>();
