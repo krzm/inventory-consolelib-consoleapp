@@ -29,45 +29,43 @@ public class AppCommands3
 
     private void RegisterImagePathCommands()
     {
-        RegisterCommand<HelpCommand<ItemImage>, ItemImage>(
+        RegisterCommand<HelpCommand<Image>, Image>(
             "Help ImagePath".ToLowerInvariant()
             , Container.Resolve<IOutput>()
             , new string[]
             {
-                nameof(ItemImage.ItemId)
-                , nameof(ItemImage.Path)
+                nameof(Image.ItemId)
+                , nameof(Image.Path)
             });
             
-        Container.RegisterSingleton<IReadCommand<ItemImage>, ItemImageReadCmd>();
+        Container.RegisterSingleton<IReadCommand<Image>, ImageReadCmd>();
 
-        RegisterCommand<ItemImageReadCommand, ItemImage>(
-            "ItemImage".ToLowerInvariant()
-            , Container.Resolve<IReadCommand<ItemImage>>());
+        RegisterCommand<ImageReadCommand, Image>(
+            "Image".ToLowerInvariant()
+            , Container.Resolve<IReadCommand<Image>>());
 
-        Container.RegisterSingleton<IInsertWizard<ItemImage>, ItemImageInsertWizard>(
-            nameof(ItemImageInsertWizard)
+        Container.RegisterSingleton<IInsertWizard<Image>, ImageInsertWizard>(
+            nameof(ImageInsertWizard)
             , new InjectionConstructor( new object[] {
                 Container.Resolve<IInventoryUnitOfWork>()
                 , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
-                //, GetModelAReadConfig()
                 , Container.Resolve<ILogger>()
             }));
 
-        RegisterCommand<ItemImageInsertCommand, ItemImage>(
-            "Insert ItemImage".ToLowerInvariant()
-            , Container.Resolve<IInsertWizard<ItemImage>>(nameof(ItemImageInsertWizard)));
+        RegisterCommand<ImageInsertCommand, Image>(
+            "Insert Image".ToLowerInvariant()
+            , Container.Resolve<IInsertWizard<Image>>(nameof(ImageInsertWizard)));
 
-        Container.RegisterSingleton<IUpdateWizard<ItemImage>, ItemImageUpdateWizard>(
-            nameof(ItemImageUpdateWizard)
+        Container.RegisterSingleton<IUpdateWizard<Image>, ImageUpdateWizard>(
+            nameof(ImageUpdateWizard)
             , new InjectionConstructor( new object[] {
                 Container.Resolve<IInventoryUnitOfWork>()
                 , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
-                //, GetModelAReadConfig()
                 , Container.Resolve<ILogger>()
             }));
 
-        RegisterCommand<ItemImageUpdateCommand, ItemImage>(
-            "Update ItemImage".ToLowerInvariant()
-            , Container.Resolve<IUpdateWizard<ItemImage>>(nameof(ItemImageUpdateWizard)));
+        RegisterCommand<ImageUpdateCommand, Image>(
+            "Update Image".ToLowerInvariant()
+            , Container.Resolve<IUpdateWizard<Image>>(nameof(ImageUpdateWizard)));
     }
 }

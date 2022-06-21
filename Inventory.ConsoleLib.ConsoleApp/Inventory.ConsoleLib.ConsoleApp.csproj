@@ -1,33 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Unity" Version="5.11.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-		<PackageReference Include="Serilog" Version="2.10.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Unity" Version="5.11.10"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.5.22302.2"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0-preview.5.22302.2"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0-preview.5.22301.12"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.0-preview.5.22301.12"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.5.22301.12"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-preview.5.22301.12"/>
+		<PackageReference Include="Serilog" Version="2.10.0"/>
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1"/>
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0"/>
 	</ItemGroup>
-
 	<ItemGroup>
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-  	</ItemGroup>
-
+	</ItemGroup>
 	<!--Debug refs-->
 	<!-- <ItemGroup>
-		<Reference Include="EFCoreHelper">
-			<HintPath>..\..\efcore-helper\EFCoreHelper\bin\Debug\net6.0\EFCoreHelper.dll</HintPath>
+		<Reference Include="EFCore.Helper">
+			<HintPath>..\..\efcore-helper\EFCore.Helper\bin\Debug\net6.0\EFCore.Helper.dll</HintPath>
 		</Reference>
 		<Reference Include="DIHelper">
 			<HintPath>..\..\di-helper\DIHelper\bin\Debug\net6.0\DIHelper.dll</HintPath>
@@ -75,11 +73,10 @@
 			<HintPath>..\..\inventory-console-lib\Inventory.Console.Lib\bin\Debug\net6.0\Inventory.Console.Lib.dll</HintPath>
 		</Reference>
 	</ItemGroup> -->
-
 	<!--Release refs-->
 	<ItemGroup>
-		<Reference Include="EFCoreHelper">
-			<HintPath>..\..\..\Build\efcore-helper\EFCoreHelper\EFCoreHelper.dll</HintPath>
+		<Reference Include="EFCore.Helper">
+			<HintPath>..\..\..\Build\efcore-helper\EFCore.Helper\EFCore.Helper.dll</HintPath>
 		</Reference>
 		<Reference Include="DIHelper">
 			<HintPath>..\..\..\Build\di-helper\DIHelper\DIHelper.dll</HintPath>
@@ -127,5 +124,4 @@
 			<HintPath>..\..\..\Build\inventory-console-lib\Inventory.Console.Lib\Inventory.Console.Lib.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-
 </Project>

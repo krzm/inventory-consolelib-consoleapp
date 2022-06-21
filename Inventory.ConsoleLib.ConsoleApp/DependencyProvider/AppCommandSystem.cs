@@ -6,8 +6,10 @@ namespace Inventory.ConsoleApp;
 
 public class AppCommandSystem<TParser> 
     : CLIFramework.AppCommandSystem<TParser>
-    where TParser : ICommandParser
+        where TParser : ICommandParser
 {
+    private ICommandRunner? commandRunner;
+
     public AppCommandSystem(
         IUnityContainer container) 
         : base(container)
@@ -16,21 +18,21 @@ public class AppCommandSystem<TParser>
 
     protected override void SetCommandDependencies()
     {
-        var commandRunner = Container.Resolve<ICommandRunner>();
+        commandRunner = Container.Resolve<ICommandRunner>();
+        ArgumentNullException.ThrowIfNull(commandRunner);
+        SetCommandRunner<ItemInsertCommand>("insert item");
+        SetCommandRunner<ItemUpdateCommand>("update item");
+        SetCommandRunner<CategoryInsertCommand>("insert category");
+        SetCommandRunner<CategoryUpdateCommand>("update category");
+        SetCommandRunner<ImageInsertCommand>("insert image");
+        SetCommandRunner<ImageUpdateCommand>("update image");
+    }
 
-        (Container.Resolve<IAppCommand>("insert item") as ItemInsertCommand)
-            .SetCommandRunner(commandRunner);
-        (Container.Resolve<IAppCommand>("update item") as ItemUpdateCommand)
-            .SetCommandRunner(commandRunner);
-
-        (Container.Resolve<IAppCommand>("insert itemcategory") as ItemCategoryInsertCommand)
-            .SetCommandRunner(commandRunner);
-        (Container.Resolve<IAppCommand>("update itemcategory") as ItemCategoryUpdateCommand)
-            .SetCommandRunner(commandRunner);
-
-        (Container.Resolve<IAppCommand>("insert itemimage") as ItemImageInsertCommand)
-            .SetCommandRunner(commandRunner);
-        (Container.Resolve<IAppCommand>("update itemimage") as ItemImageUpdateCommand)
-            .SetCommandRunner(commandRunner);
+    private void SetCommandRunner<TCmdType>(string key)
+        where TCmdType : class, IDataCommand
+    {
+        var cmd = Container.Resolve<IAppCommand>(key) as TCmdType;
+        ArgumentNullException.ThrowIfNull(cmd);
+        cmd.SetCommandRunner(commandRunner!);
     }
 }

@@ -34,7 +34,7 @@ public class AppCommands
             , Container.Resolve<IOutput>()
             , new string[]
             {
-                nameof(Item.ItemCategoryId)
+                nameof(Item.CategoryId)
                 , nameof(Item.Name)
             });
         
@@ -49,7 +49,6 @@ public class AppCommands
             , new InjectionConstructor( new object[] {
                 Container.Resolve<IInventoryUnitOfWork>()
                 , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
-                //, GetModelAReadConfig()
                 , Container.Resolve<ILogger>()
             }));
 
@@ -62,7 +61,6 @@ public class AppCommands
             , new InjectionConstructor( new object[] {
                 Container.Resolve<IInventoryUnitOfWork>()
                 , Container.Resolve<IReader<string>>(nameof(RequiredTextReader))
-                //, GetModelAReadConfig()
                 , Container.Resolve<ILogger>()
             }));
 

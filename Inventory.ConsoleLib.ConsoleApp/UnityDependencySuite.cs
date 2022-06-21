@@ -26,7 +26,7 @@ public class UnityDependencySuite
     }
 
     protected override void RegisterDatabase() => 
-        RegisterSet<AppDatabase>();
+        RegisterSet<InventoryDatabase>();
 
     protected override void RegisterConsoleInput()
     {
